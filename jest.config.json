@@ -1,0 +1,14 @@
+{
+  "bail": false,
+  "coveragePathIgnorePatterns": [
+    "<rootDir>/node_modules/",
+    "<rootDir>/lib/ethernet/"
+  ],
+  "modulePaths": [
+    "<rootDir>/lib/ethernet/"
+  ],
+  "testPathIgnorePatterns": [
+    "<rootDir>/node_modules/",
+    "<rootDir>/lib/ethernet/"
+  ]
+}

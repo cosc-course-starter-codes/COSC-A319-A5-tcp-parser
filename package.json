@@ -1,0 +1,23 @@
+{
+  "name": "tcp-parser",
+  "version": "0.1.0",
+  "description": "A library to parse TCP packets",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "lint": "node ./node_modules/eslint/bin/eslint.js index.js index.test.js ./lib/**/*.js"
+  },
+  "author": "Ryan B. Harvey",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "eslint": "^7.11.0",
+    "jest": "^26.5.3"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "dependencies": {
+    "raw-socket": "^1.7.0"
+  }
+}
