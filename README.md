@@ -233,7 +233,7 @@ UDP IPv4 Pseudo-header Structure
 -------------------------------------
 |  '  '  '  |  '  '  '  |  '  '  '  |
 |  4 bytes  |  4 bytes  |1B|1B| 2B  |
-|   Source  |    Dest   |  |Pr| UDP |
+|   Source  |    Dest   |  |Pr| TCP |
 |    IPv4   |    IPv4   |0s|  | Len |
 -------------------------------------
 ```
@@ -243,9 +243,9 @@ UDP IPv6 Pseudo-header Structure
 0       4       8      12      16      20      24      28      32      36      40
 ---------------------------------------------------------------------------------
 | ' ' ' | ' ' ' | ' ' ' | ' ' ' | ' ' ' | ' ' ' | ' ' ' | ' ' ' | ' ' ' | ' ' ' |
-|           16 bytes            |           16 bytes            |  UDP  |     | |
-|      Source IPv6 Address      |   Destination IPv6 Address    |  ULP  |     |N|
-|                               |                               |  Len  | 0s  |H|
+|           16 bytes            |           16 bytes            |  TCP  |     |N|
+|      Source IPv6 Address      |   Destination IPv6 Address    |  Len  |     |H|
+|                               |                               |       | 0s  | |
 ---------------------------------------------------------------------------------
 ```
 
@@ -300,7 +300,7 @@ included in parentheses.
       {
         type_id: (numeric type as unsigned 8-bit integer),
         type: (string, type description per "Meaning" column of Table 12.2 in your textbook),
-        length: (byte length of the option as unsigned 8-bit integer),
+        length: (byte length of the option as unsigned 8-bit integer if relevant),
         (...other relevant fields, as defined by the RFC defining the option)
       })
     ]
