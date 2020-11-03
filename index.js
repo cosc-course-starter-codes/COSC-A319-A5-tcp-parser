@@ -25,7 +25,14 @@ const tcp = require('./lib/tcp');
  *     },
  *     window_size: number,
  *     checksum: number,
- *     urgent_pointer: number
+ *     urgent_pointer: number,
+ *     options: [
+ *       {
+ *         type_id: number,
+ *         type: string,
+ *         length: number?
+ *       }
+ *     ]
  *   },
  *   pseudo_header: {
  *     pseudo_header_protocol: string,
