@@ -7,6 +7,7 @@
   "modulePaths": [
     "<rootDir>/lib/ethernet/"
   ],
+  "testEnvironment": "node",
   "testPathIgnorePatterns": [
     "<rootDir>/node_modules/",
     "<rootDir>/lib/ethernet/"

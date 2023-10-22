@@ -1,0 +1,44 @@
+{
+  "markdown": {
+    "hardwrap": false,
+    "idInHeadings": true
+  },
+  "opts": {
+    "destination": "./docs/",
+    "recurse": true,
+    "readme": "./README.md",
+    "template": "node_modules/modern-jsdoc-template/default",
+    "theme_opts": {
+      "default_theme": "dark"
+    }
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "recurseDepth": 10,
+  "source": {
+    "include": [
+      "."
+    ],
+    "exclude": [
+      "node_modules",
+      "jest.config.ci.js",
+      ".eslint.js",
+      "./docs"
+    ],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": [
+      "jsdoc",
+      "closure"
+    ]
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}
