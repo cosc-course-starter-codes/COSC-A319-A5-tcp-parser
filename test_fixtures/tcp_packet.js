@@ -77,8 +77,8 @@ module.exports = {
   ip4_parsed: {
     protocol: 'TCP',
     header: {
-      destination_port: 53174,
-      source_port: 80,
+      source_port: 53174,
+      destination_port: 80,
       sequence_number: 3662955860,
       acknowledgement_number: 1511238791,
       header_length: 8,

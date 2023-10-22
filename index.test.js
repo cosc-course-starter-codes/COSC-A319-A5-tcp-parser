@@ -1,4 +1,5 @@
 require('jest');
+const { describe, expect, test } = require('@jest/globals');
 const tcp = require('./index');
 const fixture = require('./test_fixtures/tcp_packet');
 
