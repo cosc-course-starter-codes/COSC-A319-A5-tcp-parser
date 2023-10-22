@@ -4,12 +4,12 @@
   "description": "A library to parse TCP packets",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose",
-    "watch": "jest --watch --verbose",
-    "coverage": "jest --coverage --verbose",
+    "test": "npx jest --verbose",
+    "watch": "npx jest --watch --verbose",
+    "coverage": "npx jest --coverage --verbose",
     "lint": "node ./node_modules/eslint/bin/eslint.js index.js index.test.js ./lib/**/*.js",
     "docs": "npx jsdoc --configure ./jsdoc.config.json",
-    "check": "jest --config ./jest.config.ci.js && npx eslint"
+    "check": "npx jest --config ./jest.config.ci.js && npx eslint"
   },
   "author": "Ryan B. Harvey",
   "license": "UNLICENSED",
