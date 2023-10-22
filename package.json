@@ -17,7 +17,5 @@
   "jest": {
     "testEnvironment": "node"
   },
-  "dependencies": {
-    "raw-socket": "^1.7.0"
-  }
+  "dependencies": {}
 }
