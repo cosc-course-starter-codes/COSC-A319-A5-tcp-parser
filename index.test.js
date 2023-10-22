@@ -160,7 +160,7 @@ describe('parse', () => {
     });
   });
 
-  describe('packet datagram data', () => {
+  describe('packet payload data', () => {
     test('it should provide the payload', () => {
       expect(result).toHaveProperty('payload');
       expect(result.payload).toEqual(expected.payload);
