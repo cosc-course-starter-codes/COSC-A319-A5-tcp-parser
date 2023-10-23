@@ -8,7 +8,7 @@ describe('parse', () => {
   beforeEach(() => {
     packet = fixture.ip4_packet;
     pseudo_header = fixture.ip4_pseudo_header;
-    expected = fixture.ip4_parsed;
+    expected = fixture.parsed;
     result = tcp.parse(packet, pseudo_header);
   });
 
