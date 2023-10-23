@@ -200,7 +200,7 @@ so option data length is always `L - 2` bytes. Various option types and their
 meanings, with references, can be found in
 [IANA's TCP Option Kind Numbers list](https://www.iana.org/assignments/tcp-parameters/tcp-parameters.xhtml).
 
-When parsing options for this assignment, you'll need to provide both the numeric option type `T` as the field `type_id`, as well as a string with the option type name. For the option type name field `type`, you will use the option name as listed in the _Meaning_ column of Table 12.2 of your text _The Illustrated Network_. Parsed options should also present their byte length `L` as the `length` field and any relevant fields (using their abbreviated names) as defined by the RFC listed in Table 12.2 that defines the option. RFCs can be found at [rfc-editor.net](http://rfc-editor.net).
+When parsing options for this assignment, you'll need to provide both the numeric option type `T` as the field `type_id`, as well as a string with the option type name. For the option type name field `type`, you will use the option name as listed in the _Meaning_ column of Table 12.2 of your text _The Illustrated Network_. Parsed options should also present their byte length `L` as the `length` field and any relevant fields (using their abbreviated names) as defined by the RFC listed in Table 12.2 that defines the option. RFCs can be found at [rfc-editor.net](http://rfc-editor.net). Note that several of the listed options in the textbook are now obsoleted in the standards, and can now be ignored.
 
 #### The Checksum Field and IP Pseudo-headers
 
@@ -252,7 +252,7 @@ UDP IPv6 Pseudo-header Structure
 The relevant pseudo-header is attached at the beginning of the packet,
 before the TCP header, and the checksum field of the TCP header is
 zero-filled. Using that data, the checksum is then calculated as the
-16-bit one's compliment of the one's compliment sum of the combined
+16-bit one's compliment of the two's compliment sum of the combined
 data.
 
 You can use the `createChecksum` function provided in `lib/checksum.js`
