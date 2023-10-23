@@ -107,10 +107,6 @@ describe('parse', () => {
       expect(result.header).toHaveProperty('window_size');
       expect(result.header.window_size).toEqual(expected.header.window_size);
     });
-    test('it should provide the checksum', () => {
-      expect(result.header).toHaveProperty('checksum');
-      expect(result.header.checksum).toEqual(expected.header.checksum);
-    });
     test('it should provide the urgent pointer', () => {
       expect(result.header).toHaveProperty('urgent_pointer');
       expect(result.header.urgent_pointer).toEqual(expected.header.urgent_pointer);
@@ -208,6 +204,10 @@ describe('parse', () => {
     });
 
     describe('packet checksum', () => {
+      test('it should provide the checksum', () => {
+        expect(result.header).toHaveProperty('checksum');
+        expect(result.header.checksum).toEqual(expected.header.checksum_ip4);
+      });
       describe('when checksum value matches', () => {
         beforeEach(() => {
           result = tcp.parse(packet, pseudo_header);
@@ -272,6 +272,10 @@ describe('parse', () => {
     });
 
     describe('packet checksum', () => {
+      test('it should provide the checksum', () => {
+        expect(result.header).toHaveProperty('checksum');
+        expect(result.header.checksum).toEqual(expected.header.checksum_ip6);
+      });
       describe('when checksum value matches', () => {
         beforeEach(() => {
           result = tcp.parse(packet, pseudo_header);
