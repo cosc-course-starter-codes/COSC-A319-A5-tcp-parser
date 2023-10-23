@@ -219,7 +219,7 @@ describe('parse', () => {
       });
       describe('when checksum value does not match', () => {
         beforeEach(() => {
-          const alteredPacket = Buffer.from(ip4_packet);
+          const alteredPacket = Buffer.copyBytesFrom(packet);
           alteredPacket.writeUInt16BE(2536);
           result = tcp.parse(alteredPacket, pseudo_header);
         });
@@ -283,7 +283,7 @@ describe('parse', () => {
       });
       describe('when checksum value does not match', () => {
         beforeEach(() => {
-          const alteredPacket = Buffer.from(ip4_packet);
+          const alteredPacket = Buffer.copyBytesFrom(packet);
           alteredPacket.writeUInt16BE(2536);
           result = tcp.parse(alteredPacket, pseudo_header);
         });
