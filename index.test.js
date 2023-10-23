@@ -4,19 +4,19 @@ const tcp = require('./index');
 const fixture = require('./test_fixtures/tcp_packet');
 
 describe('parse', () => {
-  let packet, ip4_pseudo_header, expected, result;
+  let packet, pseudo_header, expected, result;
   beforeEach(() => {
-    packet = fixture.packet;
-    ip4_pseudo_header = fixture.ip4_pseudo_header;
+    packet = fixture.ip4_packet;
+    pseudo_header = fixture.ip4_pseudo_header;
     expected = fixture.ip4_parsed;
-    result = tcp.parse(packet, ip4_pseudo_header);
+    result = tcp.parse(packet, pseudo_header);
   });
 
   test('it should not error on parseable packets', () => {
-    expect(() => { tcp.parse(packet, ip4_pseudo_header); }).not.toThrow();
+    expect(() => { tcp.parse(packet, pseudo_header); }).not.toThrow();
   });
   test('it should error on incomplete packets', () => {
-    expect(() => { tcp.parse(packet.subarray(0, 30), ip4_pseudo_header); })
+    expect(() => { tcp.parse(packet.subarray(0, 30), pseudo_header); })
       .toThrow('Incomplete packet: expected length 549, received 30');
   });
 
@@ -169,10 +169,10 @@ describe('parse', () => {
 
   describe('IPv4', () => {
     beforeEach(() => {
-      packet = fixture.packet;
-      ip4_pseudo_header = fixture.ip4_pseudo_header;
-      expected = fixture.ip4_parsed;
-      result = tcp.parse(packet, ip4_pseudo_header);
+      packet = fixture.ip4_packet;
+      pseudo_header = fixture.ip4_pseudo_header;
+      expected = fixture.parsed;
+      result = tcp.parse(packet, pseudo_header);
     });
 
     describe('pseudo-header', () => {
@@ -183,45 +183,109 @@ describe('parse', () => {
       test('it should provide the pseudo-header protocol', () => {
         expect(result.pseudo_header).toHaveProperty('pseudo_header_protocol');
         expect(result.pseudo_header.pseudo_header_protocol)
-          .toEqual(expected.pseudo_header.pseudo_header_protocol);
+          .toEqual(expected.pseudo_header.ip4.pseudo_header_protocol);
       });
       test('it should provide the source IP address', () => {
         expect(result.pseudo_header).toHaveProperty('source_ip');
         expect(result.pseudo_header.source_ip)
-          .toEqual(expected.pseudo_header.source_ip);
+          .toEqual(expected.pseudo_header.ip4.source_ip);
       });
       test('it should provide the destination IP address', () => {
         expect(result.pseudo_header).toHaveProperty('destination_ip');
         expect(result.pseudo_header.destination_ip)
-          .toEqual(expected.pseudo_header.destination_ip);
+          .toEqual(expected.pseudo_header.ip4.destination_ip);
       });
       test('it should provide the protocol value from the IP header', () => {
         expect(result.pseudo_header).toHaveProperty('protocol');
         expect(result.pseudo_header.protocol)
-          .toEqual(expected.pseudo_header.protocol);
+          .toEqual(expected.pseudo_header.ip4.protocol);
       });
       test('it should provide the tcp length from the IP header', () => {
         expect(result.pseudo_header).toHaveProperty('length');
         expect(result.pseudo_header.length)
-          .toEqual(expected.pseudo_header.length);
+          .toEqual(expected.pseudo_header.ip4.length);
       });
     });
 
     describe('packet checksum', () => {
       describe('when checksum value matches', () => {
         beforeEach(() => {
-          result = tcp.parse(packet, ip4_pseudo_header);
+          result = tcp.parse(packet, pseudo_header);
         });
         test('it should provide a checksum_valid status of true', () => {
           expect(result).toHaveProperty('checksum_valid');
-          // expect(result.checksum_valid).toBe(true);
+          expect(result.checksum_valid).toBe(true);
         });
       });
       describe('when checksum value does not match', () => {
         beforeEach(() => {
-          const alteredPacket = Buffer.from(packet);
+          const alteredPacket = Buffer.from(ip4_packet);
           alteredPacket.writeUInt16BE(2536);
-          result = tcp.parse(alteredPacket, ip4_pseudo_header);
+          result = tcp.parse(alteredPacket, pseudo_header);
+        });
+        test('it should provide a checksum_valid status of false', () => {
+          expect(result).toHaveProperty('checksum_valid');
+          expect(result.checksum_valid).toBe(false);
+        });
+      });
+    });
+  });
+
+  describe('IPv6', () => {
+    beforeEach(() => {
+      packet = fixture.ip6_packet;
+      pseudo_header = fixture.ip6_pseudo_header;
+      expected = fixture.parsed;
+      result = tcp.parse(packet, pseudo_header);
+    });
+
+    describe('pseudo-header', () => {
+      test('it should provide the pseudo-header used for the checksum', () => {
+        expect(result).toHaveProperty('pseudo_header');
+        expect(result.pseudo_header).toBeInstanceOf(Object);
+      });
+      test('it should provide the pseudo-header protocol', () => {
+        expect(result.pseudo_header).toHaveProperty('pseudo_header_protocol');
+        expect(result.pseudo_header.pseudo_header_protocol)
+          .toEqual(expected.pseudo_header.ip6.pseudo_header_protocol);
+      });
+      test('it should provide the source IP address', () => {
+        expect(result.pseudo_header).toHaveProperty('source_ip');
+        expect(result.pseudo_header.source_ip)
+          .toEqual(expected.pseudo_header.ip6.source_ip);
+      });
+      test('it should provide the destination IP address', () => {
+        expect(result.pseudo_header).toHaveProperty('destination_ip');
+        expect(result.pseudo_header.destination_ip)
+          .toEqual(expected.pseudo_header.ip6.destination_ip);
+      });
+      test('it should provide the protocol value from the IP header', () => {
+        expect(result.pseudo_header).toHaveProperty('protocol');
+        expect(result.pseudo_header.protocol)
+          .toEqual(expected.pseudo_header.ip6.protocol);
+      });
+      test('it should provide the tcp length from the IP header', () => {
+        expect(result.pseudo_header).toHaveProperty('length');
+        expect(result.pseudo_header.length)
+          .toEqual(expected.pseudo_header.ip6.length);
+      });
+    });
+
+    describe('packet checksum', () => {
+      describe('when checksum value matches', () => {
+        beforeEach(() => {
+          result = tcp.parse(packet, pseudo_header);
+        });
+        test('it should provide a checksum_valid status of true', () => {
+          expect(result).toHaveProperty('checksum_valid');
+          expect(result.checksum_valid).toBe(true);
+        });
+      });
+      describe('when checksum value does not match', () => {
+        beforeEach(() => {
+          const alteredPacket = Buffer.from(ip4_packet);
+          alteredPacket.writeUInt16BE(2536);
+          result = tcp.parse(alteredPacket, pseudo_header);
         });
         test('it should provide a checksum_valid status of false', () => {
           expect(result).toHaveProperty('checksum_valid');
