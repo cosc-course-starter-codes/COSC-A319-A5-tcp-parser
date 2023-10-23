@@ -388,7 +388,7 @@ All together, the example would look like this:
 
 ```{text}
 const flagsField = 0x6d; // This would be whatever you read from your packet.
-const bit3Value = (flagsField & 0b00100000) >> 5 === 1;
+const bit3FlagValue = (flagsField & 0b00100000) >> 5 === 1;
 ```
 
 Note that if you know the base-10 values of these bit mask binary numbers, you
@@ -396,7 +396,15 @@ can also use those, simplifying the code a bit:
 
 ```{text}
 const flagsField = 0x6d; // This would be whatever you read from your packet.
-const bit3Value = (flagsField & 32) >> 5 === 1;
+const bit3FlagValue = (flagsField & 32) >> 5 === 1;
+```
+
+As another shortcut, you could also just skip the bit-shifting step and check whether
+the resulting number after the bitwise `AND` is greater than `0`:
+
+```{text}
+const flagsField = 0x6d // This would be whatever you read from your socket.
+const bit3FlagValue = flagsField & 32 > 0;
 ```
 
 #### Getting started on the assignment
